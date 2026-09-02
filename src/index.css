@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply border-slate-200; }
+  html { background: #f6f9f6; }
+  body { @apply m-0 bg-[#f6f9f6] font-sans text-slate-800 antialiased; font-family: 'DM Sans', sans-serif; }
+  h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; }
+  button, input, select { font: inherit; }
+}
+
+@layer components {
+  .app-card { @apply rounded-2xl border border-white bg-white shadow-card; }
+  .label { @apply mb-1.5 block text-xs font-bold uppercase tracking-[0.12em] text-slate-400; }
+  .input { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm font-medium text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-forest-500 focus:ring-4 focus:ring-forest-50; }
+  .page-enter { animation: page-enter .32s ease-out; }
+}
+
+@keyframes page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.grid-pattern { background-image: linear-gradient(rgba(24,121,78,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(24,121,78,.045) 1px, transparent 1px); background-size: 32px 32px; }
+.dashboard-curve { stroke-dasharray: 900; stroke-dashoffset: 0; }
