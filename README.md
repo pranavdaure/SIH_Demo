@@ -313,3 +313,6 @@ Pruthviraj Gayke
 Makrand Kale
 Pranav Daure
 Ananya Sinha
+
+📜 License
+This project has been developed as a hackathon prototype for educational, innovation, and demonstration purposes.
