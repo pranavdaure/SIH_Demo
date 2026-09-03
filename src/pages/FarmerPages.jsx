@@ -498,6 +498,6 @@ export function WarehousePage({ navigate, toast }) {
 
       </div>
 
-    </div>
+  
   )
 }
