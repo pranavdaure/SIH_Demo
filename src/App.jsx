@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AppShell, CompactPortalShell } from './components/AppShell'
 import { Toasts } from './components/ui'
+import { WarehousePage } from './pages/FarmerPages'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import { AdminDashboard, BuyerDashboard } from './pages/PortalDashboards'
@@ -30,7 +31,7 @@ export default function App() {
   else {
     const pageProps = { navigate, toast, lotCreated, setLotCreated, paymentReceived, setPaymentReceived }
     const pages = {
-      dashboard: <FarmerDashboard {...pageProps}/>, market: <MarketIntelligence {...pageProps}/>, lots: <CreateLot {...pageProps}/>, matching: <BuyerMatching {...pageProps}/>, 'buyer-details': <BuyerDetails {...pageProps}/>, offers: <Offers {...pageProps}/>, deals: <DealConfirmation {...pageProps}/>, logistics: <Logistics {...pageProps}/>, payments: <Payments {...pageProps}/>, profile: <Profile {...pageProps}/>,
+      dashboard: <FarmerDashboard {...pageProps}/>, market: <MarketIntelligence {...pageProps}/>, lots: <CreateLot {...pageProps}/>, matching: <BuyerMatching {...pageProps}/>, warehouse: <WarehousePage {...pageProps}/>, 'buyer-details': <BuyerDetails {...pageProps}/>, offers: <Offers {...pageProps}/>, deals: <DealConfirmation {...pageProps}/>, logistics: <Logistics {...pageProps}/>, payments: <Payments {...pageProps}/>, profile: <Profile {...pageProps}/>,
     }
     content = <AppShell active={route} navigate={navigate} onLogout={logout} paymentReceived={paymentReceived}>{pages[route] || pages.dashboard}</AppShell>
   }
