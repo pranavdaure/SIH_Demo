@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Bell, ChevronDown, ClipboardList, Handshake, LayoutDashboard, Leaf, LogOut, Map, Menu, PackagePlus, Search, Settings2, Truck, UserRound, WalletCards, X } from 'lucide-react'
+import { Bell, ChevronDown, ClipboardList, Handshake, LayoutDashboard, Leaf, LogOut, Map, Menu, PackagePlus, Search, Settings2, Truck, UserRound, WalletCards, Warehouse as WarehouseIcon, X } from 'lucide-react'
 import { farmer } from '../data/mockData'
 import { StatusBadge } from './ui'
 
 const navItems = [
-  ['dashboard', 'Dashboard', LayoutDashboard], ['market', 'Market Intelligence', Map], ['lots', 'My Crop Lots', PackagePlus], ['matching', 'AI Recommendations', Settings2], ['offers', 'Offers', Handshake], ['deals', 'Deals', ClipboardList], ['logistics', 'Logistics', Truck], ['payments', 'Payments', WalletCards], ['profile', 'Profile', UserRound],
+  ['dashboard', 'Dashboard', LayoutDashboard], ['market', 'Market Intelligence', Map], ['lots', 'My Crop Lots', PackagePlus], ['matching', 'AI Recommendations', Settings2], ['warehouse', 'Warehouse', WarehouseIcon], ['offers', 'Offers', Handshake], ['deals', 'Deals', ClipboardList], ['logistics', 'Logistics', Truck], ['payments', 'Payments', WalletCards], ['profile', 'Profile', UserRound],
 ]
 
 export function AppShell({ active, navigate, children, onLogout, paymentReceived }) {
