@@ -86,6 +86,11 @@ export function Profile({ toast }) {
 export function WarehousePage({ navigate, toast }) {
   const [selected, setSelected] = useState(null)
 
+  const [crop, setCrop] = useState('Onion')
+  const [quantity, setQuantity] = useState(5000)
+  const [quality, setQuality] = useState('Grade A')
+  const [location, setLocation] = useState('Nashik')
+
   const warehouses = [
     {
       id: 1,
@@ -123,7 +128,6 @@ export function WarehousePage({ navigate, toast }) {
     warehouse => warehouse.id === selected
   )
 
-  const quantity = 5000
   const weeks = 1
 
   const storageCost = selectedWarehouse
@@ -173,41 +177,121 @@ export function WarehousePage({ navigate, toast }) {
         description="Find a verified warehouse and decide whether storing your crop can improve your selling opportunity."
       />
 
-      {/* Crop Information */}
-      <Card className="mb-6 p-5">
+       {/* Crop Information */}
+<Card className="mb-6 p-5">
 
-        <div className="flex flex-wrap items-center justify-between gap-5">
+  <div className="mb-5">
+    <p className="text-xs font-bold uppercase tracking-[.12em] text-slate-400">
+      Your Crop
+    </p>
 
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[.12em] text-slate-400">
-              Your Crop
-            </p>
+    <h2 className="mt-1 text-xl font-extrabold text-ink">
+      Enter Crop Details
+    </h2>
+  </div>
 
-            <h2 className="mt-1 text-xl font-extrabold text-ink">
-              Onion
-            </h2>
+  <div className="grid gap-4 md:grid-cols-4">
 
-            <p className="mt-1 text-sm text-slate-500">
-              5,000 kg · Grade A · Nashik
-            </p>
-          </div>
+    {/* Crop */}
+    <div>
+      <label className="text-sm font-bold text-slate-600">
+        Crop
+      </label>
 
-          <div className="rounded-xl bg-forest-50 px-5 py-3">
-            <p className="text-xs font-bold text-forest-600">
-              CURRENT PRICE
-            </p>
+      <select
+        value={crop}
+        onChange={(e) => setCrop(e.target.value)}
+        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-forest-500"
+      >
+        <option>Onion</option>
+        <option>Tomato</option>
+        <option>Potato</option>
+        <option>Wheat</option>
+        <option>Rice</option>
+        <option>Cotton</option>
+        <option>Soybean</option>
+      </select>
+    </div>
 
-            <p className="mt-1 text-xl font-extrabold text-ink">
-              ₹25/kg
-            </p>
-          </div>
+    {/* Quantity */}
+    <div>
+      <label className="text-sm font-bold text-slate-600">
+        Quantity (kg)
+      </label>
 
-        </div>
+      <input
+        type="number"
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+        className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-forest-500"
+        placeholder="Enter quantity"
+        min="1"
+      />
+    </div>
 
-      </Card>
+    {/* Quality */}
+    <div>
+      <label className="text-sm font-bold text-slate-600">
+        Quality
+      </label>
 
-      <div className="grid gap-6 lg:grid-cols-[1.5fr_.8fr]">
+      <select
+        value={quality}
+        onChange={(e) => setQuality(e.target.value)}
+        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-forest-500"
+      >
+        <option>Grade A</option>
+        <option>Grade B</option>
+        <option>Grade C</option>
+      </select>
+    </div>
 
+    {/* Location */}
+    <div>
+      <label className="text-sm font-bold text-slate-600">
+        Location
+      </label>
+
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-forest-500"
+        placeholder="Enter location"
+      />
+    </div>
+
+  </div>
+
+  <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-slate-50 p-4">
+
+    <div>
+      <p className="text-xs font-bold uppercase text-slate-400">
+        Selected Crop
+      </p>
+
+      <p className="mt-1 font-extrabold text-ink">
+        {crop}
+      </p>
+
+      <p className="text-sm text-slate-500">
+        {quantity.toLocaleString('en-IN')} kg · {quality} · {location}
+      </p>
+    </div>
+
+    <div className="rounded-xl bg-forest-50 px-5 py-3">
+      <p className="text-xs font-bold text-forest-600">
+        CURRENT PRICE
+      </p>
+
+      <p className="mt-1 text-xl font-extrabold text-ink">
+        ₹{currentPrice}/kg
+      </p>
+    </div>
+
+  </div>
+
+</Card>
         {/* Warehouse List */}
         <div>
 
