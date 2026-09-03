@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { ArrowRight, BadgeCheck, Building2, CalendarDays, CheckCircle2, ChevronRight, CircleDollarSign, Clock3, Copy, FileCheck2, Handshake, Info, Lightbulb, MapPin, Package, PackageCheck, Plus, Route, Send, ShieldCheck, Sparkles, Star, Store, TrendingDown, TrendingUp, Truck, WalletCards, XCircle } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Building2, CalendarDays, CheckCircle2, ChevronRight, CircleDollarSign, Clock3, Copy, FileCheck2, Handshake, Warehouse, Info, Lightbulb, MapPin, Package, PackageCheck, Plus, Route, Send, ShieldCheck, Sparkles, Star, Store, TrendingDown, TrendingUp, Truck, WalletCards, XCircle } from 'lucide-react'
 import { buyers, farmer, logistics, marketPrices, marketSnapshot, matchingFactors, priceTrend } from '../data/mockData'
 import { Button, Card, EmptyState, Metric, ScoreRing, SectionHeading, StatCard, StatusBadge } from '../components/ui'
 
@@ -81,4 +81,339 @@ export function Payments({ paymentReceived, setPaymentReceived, toast }) {
 
 export function Profile({ toast }) {
   return <div className="page-enter mx-auto max-w-4xl"><SectionHeading eyebrow="Account settings" title="Farmer Profile" description="Your details are used to personalise market and buyer recommendations." /><div className="grid gap-6 md:grid-cols-[.8fr_1.2fr]"><Card className="p-6 text-center"><span className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-forest-100 text-2xl font-extrabold text-forest-700">RP</span><h2 className="mt-4 text-xl font-extrabold text-ink">Ramesh Patil</h2><p className="mt-1 text-sm text-slate-500">Farmer · Nashik, Maharashtra</p><StatusBadge type="verified" className="mt-4"><BadgeCheck size={13} />Profile verified</StatusBadge><div className="mt-7 border-t border-slate-100 pt-5 text-left"><p className="label">Primary crop</p><p className="font-extrabold text-ink">Onion · Grade A</p><p className="mt-4 label">Farm location</p><p className="font-extrabold text-ink">Pimpalgaon Baswant</p></div></Card><Card className="p-6"><h2 className="font-extrabold text-ink">Personal details</h2><div className="mt-5 grid gap-4 sm:grid-cols-2"><label><span className="label">Full name</span><input className="input" defaultValue="Ramesh Patil" /></label><label><span className="label">Mobile number</span><input className="input" defaultValue="+91 98220 45678" /></label><label><span className="label">Village</span><input className="input" defaultValue="Pimpalgaon Baswant" /></label><label><span className="label">District</span><input className="input" defaultValue="Nashik" /></label></div><Button onClick={() => toast?.('Profile saved', 'Your farmer details were updated in this demo session.')} className="mt-6">Save changes</Button></Card></div></div>
+}
+
+export function WarehousePage({ navigate, toast }) {
+  const [selected, setSelected] = useState(null)
+
+  const warehouses = [
+    {
+      id: 1,
+      name: 'Nashik Agro Warehouse',
+      location: 'Pimpalgaon, Nashik',
+      distance: '12 km',
+      capacity: '50 Ton',
+      available: '20 Ton',
+      price: 2,
+      rating: 4.7,
+    },
+    {
+      id: 2,
+      name: 'Kisan Storage Center',
+      location: 'Lasalgaon, Nashik',
+      distance: '24 km',
+      capacity: '100 Ton',
+      available: '45 Ton',
+      price: 1.8,
+      rating: 4.6,
+    },
+    {
+      id: 3,
+      name: 'Maharashtra Cold Storage',
+      location: 'Nashik Road',
+      distance: '18 km',
+      capacity: '75 Ton',
+      available: '30 Ton',
+      price: 2.2,
+      rating: 4.8,
+    },
+  ]
+
+  const selectedWarehouse = warehouses.find(
+    warehouse => warehouse.id === selected
+  )
+
+  const quantity = 5000
+  const weeks = 1
+
+  const storageCost = selectedWarehouse
+    ? quantity * selectedWarehouse.price * weeks
+    : 0
+
+  const currentPrice = 25
+  const estimatedFuturePrice = 28
+
+  const currentValue = quantity * currentPrice
+  const futureValue = quantity * estimatedFuturePrice
+
+  const additionalValue = futureValue - currentValue - storageCost
+
+  const selectWarehouse = (warehouse) => {
+    setSelected(warehouse.id)
+
+    toast(
+      'Warehouse Selected',
+      `${warehouse.name} selected for your crop storage.`
+    )
+  }
+
+  const continueToSelling = () => {
+    if (!selectedWarehouse) {
+      toast(
+        'Select Warehouse',
+        'Please select a warehouse first.'
+      )
+      return
+    }
+
+    toast(
+      'Storage Plan Ready',
+      'You can continue to create your crop lot.'
+    )
+
+    navigate('lots')
+  }
+
+  return (
+    <div className="page-enter mx-auto max-w-6xl">
+
+      <SectionHeading
+        eyebrow="Store & Sell Later"
+        title="Warehouse"
+        description="Find a verified warehouse and decide whether storing your crop can improve your selling opportunity."
+      />
+
+      {/* Crop Information */}
+      <Card className="mb-6 p-5">
+
+        <div className="flex flex-wrap items-center justify-between gap-5">
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[.12em] text-slate-400">
+              Your Crop
+            </p>
+
+            <h2 className="mt-1 text-xl font-extrabold text-ink">
+              Onion
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              5,000 kg · Grade A · Nashik
+            </p>
+          </div>
+
+          <div className="rounded-xl bg-forest-50 px-5 py-3">
+            <p className="text-xs font-bold text-forest-600">
+              CURRENT PRICE
+            </p>
+
+            <p className="mt-1 text-xl font-extrabold text-ink">
+              ₹25/kg
+            </p>
+          </div>
+
+        </div>
+
+      </Card>
+
+      <div className="grid gap-6 lg:grid-cols-[1.5fr_.8fr]">
+
+        {/* Warehouse List */}
+        <div>
+
+          <div className="mb-4">
+            <h2 className="text-lg font-extrabold text-ink">
+              Nearby Warehouses
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Compare distance, capacity, rating and storage cost.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+
+            {warehouses.map(warehouse => (
+
+              <button
+                key={warehouse.id}
+                onClick={() => selectWarehouse(warehouse)}
+                className={`w-full rounded-2xl border p-5 text-left transition ${
+                  selected === warehouse.id
+                    ? 'border-forest-500 bg-forest-50 shadow-sm'
+                    : 'border-slate-200 bg-white hover:border-forest-200'
+                }`}
+              >
+
+                <div className="flex items-start gap-4">
+
+                  <span
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
+                      selected === warehouse.id
+                        ? 'bg-forest-600 text-white'
+                        : 'bg-slate-100 text-slate-500'
+                    }`}
+                  >
+                    <Warehouse size={22} />
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+
+                    <div className="flex flex-wrap items-center gap-2">
+
+                      <h3 className="font-extrabold text-ink">
+                        {warehouse.name}
+                      </h3>
+
+                      <StatusBadge type="recommended">
+                        Verified
+                      </StatusBadge>
+
+                    </div>
+
+                    <p className="mt-1 text-sm text-slate-500">
+                      📍 {warehouse.location} · {warehouse.distance}
+                    </p>
+
+                    <div className="mt-3 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
+
+                      <span>
+                        📦 {warehouse.available} available
+                      </span>
+
+                      <span>
+                        ⭐ {warehouse.rating}
+                      </span>
+
+                      <span>
+                        ₹{warehouse.price}/kg/week
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
+        {/* Storage Summary */}
+        <aside>
+
+          <Card className="sticky top-6 p-5">
+
+            <div className="flex items-center gap-2">
+
+              <span className="rounded-lg bg-forest-50 p-2 text-forest-600">
+                <Warehouse size={18} />
+              </span>
+
+              <h2 className="font-extrabold text-ink">
+                Storage Analysis
+              </h2>
+
+            </div>
+
+            {!selectedWarehouse ? (
+
+              <div className="mt-6 rounded-xl bg-slate-50 p-5 text-center">
+
+                <p className="text-sm font-semibold text-slate-500">
+                  Select a warehouse to see the estimated storage cost and selling opportunity.
+                </p>
+
+              </div>
+
+            ) : (
+
+              <div className="mt-5 space-y-4">
+
+                <div>
+                  <p className="text-xs font-bold uppercase text-slate-400">
+                    Selected Warehouse
+                  </p>
+
+                  <p className="mt-1 font-extrabold text-ink">
+                    {selectedWarehouse.name}
+                  </p>
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">
+                    Storage duration
+                  </span>
+
+                  <b>1 Week</b>
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">
+                    Storage cost
+                  </span>
+
+                  <b>
+                    ₹{storageCost.toLocaleString('en-IN')}
+                  </b>
+                </div>
+
+                <div className="border-t border-slate-100 pt-4">
+
+                  <p className="text-xs font-bold uppercase text-slate-400">
+                    Price Comparison
+                  </p>
+
+                  <div className="mt-3 flex justify-between text-sm">
+                    <span className="text-slate-500">
+                      Current value
+                    </span>
+
+                    <b>
+                      ₹{currentValue.toLocaleString('en-IN')}
+                    </b>
+                  </div>
+
+                  <div className="mt-2 flex justify-between text-sm">
+                    <span className="text-slate-500">
+                      Estimated future value
+                    </span>
+
+                    <b className="text-forest-700">
+                      ₹{futureValue.toLocaleString('en-IN')}
+                    </b>
+                  </div>
+
+                </div>
+
+                <div className="rounded-xl bg-forest-50 p-4">
+
+                  <p className="text-xs font-bold uppercase text-forest-600">
+                    Estimated additional value
+                  </p>
+
+                  <p className="mt-1 text-2xl font-extrabold text-forest-700">
+                    ₹{additionalValue.toLocaleString('en-IN')}
+                  </p>
+
+                  <p className="mt-1 text-xs text-forest-700">
+                    Demo estimate after storage cost.
+                  </p>
+
+                </div>
+
+                <Button
+                  onClick={continueToSelling}
+                  className="w-full"
+                  icon={Warehouse}
+                >
+                  Store & Continue
+                </Button>
+
+              </div>
+
+            )}
+
+          </Card>
+
+        </aside>
+
+      </div>
+
+    </div>
+  )
 }
